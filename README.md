@@ -1,34 +1,34 @@
-# 🎓 Projet Micro-services - Partie 4 : Quality Assurance & Auth Service
+# 🎓 Plateforme de Gestion des Étudiants (Architecture Micro-services) - Partie 5
 
-Bienvenue dans la **Version 4** du projet. Cette étape marque l'aboutissement du cycle de développement avec une attention particulière portée à la qualité logicielle (QA), aux tests automatisés et à la sécurité.
+Bienvenue dans la **Version 5** du projet. Cette étape marque l'aboutissement de l'architecture avec l'intégration de la communication asynchrone, de l'observabilité et de la résilience.
 
-## 🏗️ Architecture Technique (Mise à jour)
-La stack technique s'est enrichie de nouveaux composants :
-*   **Auth Service** : Micro-service Node.js/Express pour la gestion JWT.
-*   **MongoDB** : Base de données NoSQL pour le stockage des utilisateurs.
-*   **QA Suite** : Intégration de JaCoCo, Gatling et Cypress.
-*   **CI/CD** : GitHub Actions lié à Jira/Xray.
+## 🏗️ Architecture Technique (Sprint 5)
+L'architecture a été complétée par des piliers fondamentaux de la production :
 
-## 🧪 Statut des Tests (QA)
-*   **Couverture JaCoCo** : **80%+** validée.
-*   **Tests Unitaires/Intégration** : JUnit 5 + Testcontainers.
-*   **Tests E2E** : Cypress.
-*   **Tests de Stress** : Gatling.
+1. **Communication Asynchrone (Kafka)** : Découplage total entre les services via un broker de messages (Apache Kafka).
+2. **Notification Service** : Un nouveau micro-service dédié à la gestion des événements métier.
+3. **Observabilité (ELK Stack)** : Centralisation des logs (Elasticsearch, Logstash, Kibana) pour un diagnostic rapide.
+4. **Monitoring (Prometheus & Grafana)** : Visualisation des métriques de performance et santé du système.
+5. **Résilience** : Mise en place de Health Checks avancés dans Docker Compose.
 
----
+## 🚀 Fonctionnalités Clés
+- **Événements Temps Réel** : Notification instantanée lors de l'inscription d'un étudiant ou de l'ajout d'une note via Kafka.
+- **Logs Centralisés** : Tous les logs du système sont consultables depuis une interface unique (Kibana).
+- **Tableaux de Bord** : Surveillance de la RAM, du CPU et des requêtes HTTP via Grafana.
 
-## 📖 Documentation détaillée
-Pour consulter le guide complet de cette version (commandes, architecture, stratégie de test), veuillez ouvrir le fichier dédié :
-👉 **[README_PARTIE_4.md](./README_PARTIE_4.md)**
+## 🔗 Liens Utiles (Accès Local)
 
----
+| Service | URL |
+| :--- | :--- |
+| **Frontend UI** | [http://localhost:3000](http://localhost:3000) |
+| **Eureka Dashboard** | [http://localhost:8761](http://localhost:8761) |
+| **Kibana (Logs)** | [http://localhost:5601](http://localhost:5601) |
+| **Grafana (Métriques)** | [http://localhost:3002](http://localhost:3002) |
+| **API Gateway** | [http://localhost:8080](http://localhost:8080) |
 
-## 🚀 Lancement rapide
+## 🛠️ Lancement rapide
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
-Accès Frontend : http://localhost:3000
-Accès Auth API : http://localhost:3001/auth
 
----
-*Réalisé par Nour Kidoudi - Activité Partie 4*
+**Réalisé par Nour Kidoudi - Activité Partie 5 (Communication & Observabilité)**
