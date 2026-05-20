@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+      routes:
+        - id: etudiant-service
+          uri: lb://etudiant-service
+          predicates:
+            - Path=/api/etudiants/**, /api/departements/**
+        - id: grading-service
+          uri: lb://grading-service
+          predicates:
+            - Path=/api/notes/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+
+# On s'assure que la Gateway ne bloque pas les requêtes de modification
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
