@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  labels:
+    {{- include "projet-etudiants.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount.notificationService }}
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: "{{ .Values.images.notificationService.repository }}:{{ .Values.images.notificationService.tag }}"
+          imagePullPolicy: {{ .Values.images.notificationService.pullPolicy }}
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8083
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8083
+            initialDelaySeconds: 60
+            periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - port: 8083
+      targetPort: 8083
+  type: ClusterIP
